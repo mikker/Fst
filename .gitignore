@@ -16,3 +16,6 @@ tmp/*
 *.db
 .beads/daemon.log
 .beads/dolt-monitor.pid.lock
+
+__pycache__/
+*.pyc

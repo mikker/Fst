@@ -3,23 +3,98 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 90;
+	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+        E00000000000000000000001 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = E00000000000000000000002 /* Sparkle */; };
+        E00000000000000000000004 /* CustomThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000005; };
+		B0000000000000000000000C /* FstQuickLook.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B00000000000000000000001 /* FstQuickLook.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D00000000000000000000000 /* Fst/EditorPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000000 /* Fst/EditorPreferences.swift */; };
+		D00000000000000000000001 /* Fst/EditorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000001 /* Fst/EditorTheme.swift */; };
+		D00000000000000000000002 /* Fst/SyntaxLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000002 /* Fst/SyntaxLexer.swift */; };
+		D00000000000000000000003 /* Fst/SyntaxHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000003 /* Fst/SyntaxHighlighter.swift */; };
+		D00000000000000000000004 /* Fst/Performance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000004 /* Fst/Performance.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B0000000000000000000000D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B00000000000000000000004;
+			remoteInfo = FstQuickLook;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B0000000000000000000000B /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B0000000000000000000000C /* FstQuickLook.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+        E00000000000000000000005 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fst/CustomThemes.swift; sourceTree = SOURCE_ROOT; };
 		000000000000000000000120 /* Fst.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fst.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B00000000000000000000001 /* FstQuickLook.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; path = FstQuickLook.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C00000000000000000000000 /* Fst/EditorPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fst/EditorPreferences.swift; sourceTree = SOURCE_ROOT; };
+		C00000000000000000000001 /* Fst/EditorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fst/EditorTheme.swift; sourceTree = SOURCE_ROOT; };
+		C00000000000000000000002 /* Fst/SyntaxLexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fst/SyntaxLexer.swift; sourceTree = SOURCE_ROOT; };
+		C00000000000000000000003 /* Fst/SyntaxHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fst/SyntaxHighlighter.swift; sourceTree = SOURCE_ROOT; };
+		C00000000000000000000004 /* Fst/Performance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fst/Performance.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A00000000000000000000001 /* Exceptions for "Fst" folder in "Fst" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+                Fst.entitlements,
+			);
+			target = 000000000000000100000000 /* Fst */;
+		};
+		B00000000000000000000003 /* Exceptions for "FstQuickLook" folder in "FstQuickLook" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B00000000000000000000004 /* FstQuickLook */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		000000000000000000000010 /* Fst */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A00000000000000000000001 /* Exceptions for "Fst" folder in "Fst" target */,
+			);
 			path = Fst;
+			sourceTree = "<group>";
+		};
+		B00000000000000000000002 /* FstQuickLook */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B00000000000000000000003 /* Exceptions for "FstQuickLook" folder in "FstQuickLook" target */,
+			);
+			path = FstQuickLook;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		000000000000000130000000 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+                E00000000000000000000001,
+			);
+		};
+		B00000000000000000000006 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
 			);
@@ -31,6 +106,8 @@
 			isa = PBXGroup;
 			children = (
 				000000000000000000000010 /* Fst */,
+				B00000000000000000000002 /* FstQuickLook */,
+				B0000000000000000000000F /* Quick Look Shared Sources */,
 				000000000000000000000020 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -39,8 +116,22 @@
 			isa = PBXGroup;
 			children = (
 				000000000000000000000120 /* Fst.app */,
+				B00000000000000000000001 /* FstQuickLook.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B0000000000000000000000F /* Quick Look Shared Sources */ = {
+			isa = PBXGroup;
+			children = (
+				C00000000000000000000004 /* Fst/Performance.swift */,
+                E00000000000000000000005,
+				C00000000000000000000000 /* Fst/EditorPreferences.swift */,
+				C00000000000000000000001 /* Fst/EditorTheme.swift */,
+				C00000000000000000000002 /* Fst/SyntaxLexer.swift */,
+				C00000000000000000000003 /* Fst/SyntaxHighlighter.swift */,
+			);
+			name = "Quick Look Shared Sources";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -53,16 +144,39 @@
 				000000000000000120000000 /* Sources */,
 				000000000000000130000000 /* Frameworks */,
 				000000000000000140000000 /* Resources */,
+				B0000000000000000000000B /* Embed App Extensions */,
 			);
 			buildRules = (
+			);
+			dependencies = (
+				B0000000000000000000000E /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				000000000000000000000010 /* Fst */,
 			);
 			name = Fst;
-			productName = MyApp;
+            packageProductDependencies = (E00000000000000000000002,);
+			productName = Fst;
 			productReference = 000000000000000000000120 /* Fst.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B00000000000000000000004 /* FstQuickLook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B00000000000000000000008 /* Build configuration list for PBXNativeTarget "FstQuickLook" */;
+			buildPhases = (
+				B00000000000000000000005 /* Sources */,
+				B00000000000000000000006 /* Frameworks */,
+				B00000000000000000000007 /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				B00000000000000000000002 /* FstQuickLook */,
+			);
+			name = FstQuickLook;
+			productName = FstQuickLook;
+			productReference = B00000000000000000000001 /* FstQuickLook.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -87,6 +201,7 @@
 				Base,
 			);
 			mainGroup = 000000000000000000000001;
+            packageReferences = (E00000000000000000000003,);
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 000000000000000000000020 /* Products */;
@@ -94,12 +209,19 @@
 			projectRoot = "";
 			targets = (
 				000000000000000100000000 /* Fst */,
+				B00000000000000000000004 /* FstQuickLook */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		000000000000000140000000 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+		};
+		B00000000000000000000007 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
 			);
@@ -112,8 +234,33 @@
 			files = (
 			);
 		};
+		B00000000000000000000005 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+				D00000000000000000000004 /* Fst/Performance.swift in Sources */,
+                E00000000000000000000004,
+				D00000000000000000000000 /* Fst/EditorPreferences.swift in Sources */,
+				D00000000000000000000001 /* Fst/EditorTheme.swift in Sources */,
+				D00000000000000000000002 /* Fst/SyntaxLexer.swift in Sources */,
+				D00000000000000000000003 /* Fst/SyntaxHighlighter.swift in Sources */,
+			);
+		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		B0000000000000000000000E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B00000000000000000000004 /* FstQuickLook */;
+			targetProxy = B0000000000000000000000D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+        E00000000000000000000003 = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/sparkle-project/Sparkle"; requirement = {kind = exactVersion; version = 2.9.6; }; };
+/* End XCRemoteSwiftPackageReference section */
+/* Begin XCSwiftPackageProductDependency section */
+        E00000000000000000000002 = {isa = XCSwiftPackageProductDependency; package = E00000000000000000000003; productName = Sparkle; };
+/* End XCSwiftPackageProductDependency section */
 /* Begin XCBuildConfiguration section */
 		000000000000000011000000 /* Debug configuration for PBXProject "Fst" */ = {
 			isa = XCBuildConfiguration;
@@ -151,7 +298,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DRIVERKIT_DEPLOYMENT_TARGET = 27.0;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -169,19 +315,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROJECT_UNIQUE_VALUE = YFBAHVOS;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TVOS_DEPLOYMENT_TARGET = 27.0;
-				WATCHOS_DEPLOYMENT_TARGET = 27.0;
-				XROS_DEPLOYMENT_TARGET = 27.0;
 			};
 			name = Debug;
 		};
@@ -221,7 +362,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DRIVERKIT_DEPLOYMENT_TARGET = 27.0;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -233,93 +373,122 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PROJECT_UNIQUE_VALUE = YFBAHVOS;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				TVOS_DEPLOYMENT_TARGET = 27.0;
-				WATCHOS_DEPLOYMENT_TARGET = 27.0;
-				XROS_DEPLOYMENT_TARGET = 27.0;
 			};
 			name = Release;
 		};
 		000000000000000111000000 /* Debug configuration for PBXNativeTarget "Fst" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = Fst;
+                CODE_SIGN_ENTITLEMENTS = Fst/Fst.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DDB8SQMXS9;
 				ENABLE_APP_SANDBOX = YES;
-				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
+                ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				INFOPLIST_FILE = Fst/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "devplaceholder.$(PROJECT_UNIQUE_VALUE:identifier).$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mikker.Fst;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
-				SDKROOT = auto;
+				SDKROOT = macosx;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
 		000000000000000112000000 /* Release configuration for PBXNativeTarget "Fst" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = Fst;
+                CODE_SIGN_ENTITLEMENTS = Fst/Fst.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DDB8SQMXS9;
 				ENABLE_APP_SANDBOX = YES;
-				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
+                ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				INFOPLIST_FILE = Fst/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "devplaceholder.$(PROJECT_UNIQUE_VALUE:identifier).$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mikker.Fst;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
-				SDKROOT = auto;
+				SDKROOT = macosx;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+			};
+			name = Release;
+		};
+		B00000000000000000000009 /* Debug configuration for PBXNativeTarget "FstQuickLook" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DDB8SQMXS9;
+				ENABLE_APP_SANDBOX = YES;
+                ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FstQuickLook/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mikker.Fst.QuickLook;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B0000000000000000000000A /* Release configuration for PBXNativeTarget "FstQuickLook" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DDB8SQMXS9;
+				ENABLE_APP_SANDBOX = YES;
+                ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FstQuickLook/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mikker.Fst.QuickLook;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -339,6 +508,14 @@
 			buildConfigurations = (
 				000000000000000111000000 /* Debug configuration for PBXNativeTarget "Fst" */,
 				000000000000000112000000 /* Release configuration for PBXNativeTarget "Fst" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		B00000000000000000000008 /* Build configuration list for PBXNativeTarget "FstQuickLook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B00000000000000000000009 /* Debug configuration for PBXNativeTarget "FstQuickLook" */,
+				B0000000000000000000000A /* Release configuration for PBXNativeTarget "FstQuickLook" */,
 			);
 			defaultConfigurationName = Release;
 		};

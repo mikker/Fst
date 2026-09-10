@@ -1,0 +1,70 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing version tag (v1.2.3)
+        required: true
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: release
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref_name }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - name: Test
+        run: Scripts/test.sh
+      - name: Import signing credentials
+        env:
+          DEVELOPER_ID_P12: ${{ secrets.DEVELOPER_ID_P12 }}
+          DEVELOPER_ID_PASSWORD: ${{ secrets.DEVELOPER_ID_PASSWORD }}
+          NOTARY_APPLE_ID: ${{ secrets.NOTARY_APPLE_ID }}
+          NOTARY_PASSWORD: ${{ secrets.NOTARY_PASSWORD }}
+          NOTARY_TEAM_ID: DDB8SQMXS9
+        run: Scripts/ci-signing.sh
+      - name: Build, notarize, and publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+          NOTARYTOOL_PROFILE: FstCI
+        run: Scripts/release.sh "$RELEASE_TAG"
+      - name: Checkout Homebrew tap
+        uses: actions/checkout@v4
+        with:
+          repository: mikker/homebrew-tap
+          ssh-key: ${{ secrets.HOMEBREW_TAP_SSH_KEY }}
+          path: build/tap
+      - name: Update Homebrew
+        run: |
+          cp dist/fst.rb build/tap/Casks/fst.rb
+          cd build/tap
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add Casks/fst.rb
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update Fst release'
+            git pull --rebase
+            git push
+          fi
+      - name: Clean signing keychain
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/fst-signing.keychain-db" ]; then
+            security delete-keychain "$RUNNER_TEMP/fst-signing.keychain-db"
+          fi
