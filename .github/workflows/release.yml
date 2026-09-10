@@ -66,5 +66,6 @@ jobs:
         if: always()
         run: |
           if [ -f "$RUNNER_TEMP/fst-signing.keychain-db" ]; then
+            security default-keychain -d user -s login.keychain-db
             security delete-keychain "$RUNNER_TEMP/fst-signing.keychain-db"
           fi

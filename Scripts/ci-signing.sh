@@ -16,4 +16,5 @@ security unlock-keychain -p "$password" "$keychain"
 security import "$certificate" -P "$DEVELOPER_ID_PASSWORD" -A -t cert -f pkcs12 -k "$keychain"
 security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$password" "$keychain" >/dev/null
 security list-keychains -d user -s "$keychain" login.keychain-db
+security default-keychain -d user -s "$keychain"
 xcrun notarytool store-credentials FstCI --apple-id "$NOTARY_APPLE_ID" --password "$NOTARY_PASSWORD" --team-id "$NOTARY_TEAM_ID" --keychain "$keychain"
