@@ -29,7 +29,19 @@ jobs:
           xcode-version: latest-stable
       - name: Test
         run: Scripts/test.sh
+      - name: Check for a published release
+        id: existing
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          published=false
+          if [ "$(gh release view "$RELEASE_TAG" --repo mikker/Fst --json isDraft --jq .isDraft 2>/dev/null || true)" = false ]; then
+            published=true
+          fi
+          echo "published=$published" >> "$GITHUB_OUTPUT"
       - name: Import signing credentials
+        if: steps.existing.outputs.published != 'true'
         env:
           DEVELOPER_ID_P12: ${{ secrets.DEVELOPER_ID_P12 }}
           DEVELOPER_ID_PASSWORD: ${{ secrets.DEVELOPER_ID_PASSWORD }}
