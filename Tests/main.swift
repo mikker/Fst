@@ -193,7 +193,8 @@ let supportedTypes = DefaultEditor.contentTypes
 expect(!supportedTypes.contains(.data), "Never claim all data files")
 expect(!supportedTypes.contains(.text), "Use specific types, not the broad text parent")
 expect(!supportedTypes.contains { $0.conforms(to: .audiovisualContent) }, "Never claim video for .ts")
-expect(supportedTypes.contains(.svg), "Include SVG explicitly")
+expect(!supportedTypes.contains(.html) && !supportedTypes.contains(.svg), "Never take over browser document types")
+expect(!DefaultEditor.extensions.contains("txt") && DefaultEditor.extensions.contains("swift"), "Limit defaults to code extensions")
 expect(Set(supportedTypes).count == supportedTypes.count, "Deduplicate shared content types")
 
 var attempted: [UTType] = []

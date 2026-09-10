@@ -9,10 +9,12 @@ struct DefaultEditor {
         var cancelled = false
     }
 
+    static let extensions = Set(Language.hashExtensions + Language.slashExtensions + Language.sqlExtensions + Language.dataExtensions)
+
     static var contentTypes: [UTType] {
         // Constrain lookup to text: .ts also identifies an MPEG transport stream.
-        let types = Language.supportedExtensions.sorted().compactMap {
-            $0 == "svg" ? .svg : UTType(filenameExtension: $0, conformingTo: .text)
+        let types = extensions.sorted().compactMap {
+            UTType(filenameExtension: $0, conformingTo: .text)
         }
         return Array(Set(types)).sorted { $0.identifier < $1.identifier }
     }

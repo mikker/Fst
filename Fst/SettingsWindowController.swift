@@ -69,12 +69,12 @@ final class SettingsWindowController: NSWindowController {
 
         let title = NSTextField(labelWithString: "Default editor")
         title.font = .systemFont(ofSize: NSFont.systemFontSize, weight: .semibold)
-        let description = NSTextField(wrappingLabelWithString: "Open supported code, text, and configuration files in Fst when you double-click them in Finder.")
+        let description = NSTextField(wrappingLabelWithString: "Open supported code files in Fst when you double-click them in Finder.")
         description.textColor = .secondaryLabelColor
         defaultButton.bezelStyle = .rounded
         defaultButton.target = self
         defaultButton.action = #selector(makeDefault(_:))
-        defaultButton.toolTip = Language.supportedExtensions.sorted().map { ".\($0)" }.joined(separator: ", ")
+        defaultButton.toolTip = DefaultEditor.extensions.sorted().map { ".\($0)" }.joined(separator: ", ")
         progress.style = .spinning
         progress.controlSize = .small
         progress.isDisplayedWhenStopped = false

@@ -23,9 +23,9 @@ Fst maps general TextMate scopes in VS Code themes to its four token categories.
 
 ## Settings
 
-Open **Fst → Settings…** (⌘,) to choose separate light/dark palettes, a font and size, or a line-height percentage (80–240%). Enable **Wrap lines to window width** to wrap long lines without changing file contents; wrapping is off by default. Changes apply immediately to open editors. You can also click **Make Fst the Default Editor**. The button sets the default app for the supported source, configuration, and plain-text file types, including SVG. Types already assigned to Fst are skipped. macOS may request consent for each remaining type; its current API provides no batch-confirmation option. The window reports partial failures and stops if you cancel a system prompt. Associations change only when you click the button.
+Open **Fst → Settings…** (⌘,) to choose separate light/dark palettes, a font and size, or a line-height percentage (80–240%). Enable **Wrap lines to window width** to wrap long lines without changing file contents; wrapping is off by default. Changes apply immediately to open editors. You can also click **Make Fst the Default Editor**. The button sets the default app for supported code file extensions. Browser documents such as HTML and SVG, prose formats, and generic text files are excluded. Types already assigned to Fst are skipped. macOS may request consent for each remaining type; its current API provides no batch-confirmation option. The window reports partial failures and stops if you cancel a system prompt. Associations change only when you click the button.
 
-The list follows the highlighter's supported extensions, plus `.txt`, `.text`, and `.log`. Extensionless files follow macOS's detected content type. Generic data and video types are excluded; TypeScript uses its text type even though `.ts` is also a video extension. Imported type declarations cover formats macOS does not otherwise recognize.
+The list follows the highlighter's programming and configuration extensions. Extensionless files, markup-only formats, generic data, and video types are excluded; TypeScript uses its text type even though `.ts` is also a video extension. Imported type declarations cover formats macOS does not otherwise recognize.
 
 ## Editor controls
 
