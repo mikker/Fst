@@ -1,0 +1,18 @@
+Updates/*
+*xcuserdata*
+default.profraw
+build/
+dist/
+.nvim/xcodebuild
+.env
+.env.local
+
+# bv (beads viewer) local config and caches
+.bv/
+tmp/*
+
+# Dolt database files (added by bd init)
+.dolt/
+*.db
+.beads/daemon.log
+.beads/dolt-monitor.pid.lock
