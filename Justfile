@@ -91,15 +91,6 @@ build-signed:
 quicklook-preview file="build/fixtures/small.swift": fixtures quicklook-register
   qlmanage -p {{quote(file)}}
 
-# Tag the current main commit and let GitHub sign, notarize, publish, and update Homebrew.
+# Build, sign, and notarize locally, then publish to GitHub and update Homebrew.
 release version:
-  #!/bin/bash
-  set -euo pipefail
-  version={{quote(version)}}
-  [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo 'Expected X.Y.Z'; exit 1; }
-  [[ "$(git branch --show-current)" == main ]] || { echo 'Release from main'; exit 1; }
-  [[ -z "$(git status --porcelain)" ]] || { echo 'Commit your changes first'; exit 1; }
-  git fetch origin main
-  [[ "$(git rev-parse HEAD)" == "$(git rev-parse origin/main)" ]] || { echo 'Push or pull main first'; exit 1; }
-  git tag -a "v$version" -m "Release $version"
-  git push origin "v$version"
+  Scripts/release.sh {{quote(version)}}
