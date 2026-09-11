@@ -1,0 +1,6 @@
+#:schema https://fut.sh/schemas/project.json
+
+[extension.run]
+command = ["just", "run"]
+auto_start = false
+signal = "STATUS:READY"
