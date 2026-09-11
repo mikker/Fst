@@ -8,6 +8,27 @@ final class CodeTextView: NSTextView {
         appearanceChanged?()
     }
 
+    override func mouseDown(with event: NSEvent) {
+        let modifiers = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
+        let point = convert(event.locationInWindow, from: nil)
+        guard event.clickCount == 1, modifiers.isEmpty, isBelowText(point) else {
+            super.mouseDown(with: event)
+            return
+        }
+
+        window?.makeFirstResponder(self)
+        setSelectedRange(NSRange(location: textStorage?.length ?? 0, length: 0),
+                         affinity: .downstream, stillSelecting: false)
+    }
+
+    private func isBelowText(_ point: NSPoint) -> Bool {
+        guard let layoutManager, let textContainer else { return false }
+        layoutManager.ensureLayout(for: textContainer)
+        let bottom = max(layoutManager.usedRect(for: textContainer).maxY,
+                         layoutManager.extraLineFragmentRect.maxY) + textContainerOrigin.y
+        return point.y > bottom
+    }
+
     override func insertNewline(_ sender: Any?) {
         let source = textStorage?.mutableString ?? (string as NSString)
         let location = selectedRange().location
@@ -204,7 +225,8 @@ final class EditorViewController: NSViewController, NSTextViewDelegate {
         let paragraph = EditorPreferences.paragraphStyle
         textView.font = EditorPreferences.font
         textView.defaultParagraphStyle = paragraph
-        textView.typingAttributes = [.font: EditorPreferences.font, .paragraphStyle: paragraph]
+        textView.typingAttributes[.font] = EditorPreferences.font
+        textView.typingAttributes[.paragraphStyle] = paragraph
         if let storage = textView.textStorage, storage.length > 0 {
             storage.addAttribute(.paragraphStyle, value: paragraph, range: NSRange(location: 0, length: storage.length))
         }

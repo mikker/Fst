@@ -78,6 +78,20 @@ func testDocumentsAndEditing() throws {
         expect(text.enclosingScrollView!.frame.height == size.height - 30, "Text area must resize while the status bar keeps its height")
     }
 
+    editor.setText("first\nsecond\n", filename: "test.swift")
+    let clickLayout = text.layoutManager!
+    clickLayout.ensureLayout(for: text.textContainer!)
+    let textBottom = text.textContainerOrigin.y + max(clickLayout.usedRect(for: text.textContainer!).maxY,
+                                                       clickLayout.extraLineFragmentRect.maxY)
+    let clickInWindow = text.convert(NSPoint(x: text.textContainerOrigin.x, y: textBottom + 40), to: nil)
+    let click = NSEvent.mouseEvent(with: .leftMouseDown, location: clickInWindow, modifierFlags: [], timestamp: 0,
+                                   windowNumber: editorWindow.windowNumber, context: nil, eventNumber: 0,
+                                   clickCount: 1, pressure: 1)!
+    text.mouseDown(with: click)
+    expect(text.selectedRange().location == text.textStorage!.length && text.selectionAffinity == .downstream,
+           "Clicking below the document must leave the cursor at the end of the last line")
+    editor.setText(original, filename: "test.swift")
+
     text.setSelectedRange(NSRange(location: (text.string as NSString).length, length: 0))
     text.insertText("new", replacementRange: text.selectedRange())
     RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.05))
@@ -116,6 +130,15 @@ func testDocumentsAndEditing() throws {
     editor.setLanguage(filename: "notes.txt")
     waitForHighlighting()
     expect(layout.temporaryAttribute(.foregroundColor, atCharacterIndex: 1, effectiveRange: nil) == nil, "Clear coloring for plain text")
+    text.appearance = NSAppearance(named: .darkAqua)
+    editor.setText("", filename: "notes.txt")
+    let darkForeground = EditorTheme.current(for: text.effectiveAppearance).foreground
+    expect(text.typingAttributes[.foregroundColor] as? NSColor == darkForeground,
+           "Loading a document must preserve the active theme's typing color")
+    text.insertText("plain text", replacementRange: text.selectedRange())
+    expect(text.textStorage!.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? NSColor == darkForeground,
+           "Plain text typed in dark mode must use the dark foreground")
+    text.appearance = nil
     print("PASS: UTF-16 byte order, incremental highlighting, plain text reset")
 
     let preferenceDocument = TextDocument()
