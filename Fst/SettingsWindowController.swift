@@ -7,10 +7,12 @@ final class SettingsWindowController: NSWindowController {
     private let sizeField = NSTextField()
     private let heightField = NSTextField()
     private let wrapButton = NSButton(checkboxWithTitle: "Wrap lines to window width", target: nil, action: nil)
+    private let lineNumbersButton = NSButton(checkboxWithTitle: "Show line numbers", target: nil, action: nil)
     private let defaultButton = NSButton(title: "Make Fst the Default Editor", target: nil, action: nil)
     private let status = NSTextField(wrappingLabelWithString: "")
     private let progress = NSProgressIndicator()
     private let themeStatus = NSTextField(wrappingLabelWithString: "")
+    private var preferencesObserver: NSObjectProtocol?
 
     init() {
         let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 520, height: 580),
@@ -56,6 +58,9 @@ final class SettingsWindowController: NSWindowController {
         wrapButton.state = EditorPreferences.wrapLines ? .on : .off
         wrapButton.target = self
         wrapButton.action = #selector(changePreferences(_:))
+        lineNumbersButton.state = EditorPreferences.showLineNumbers ? .on : .off
+        lineNumbersButton.target = self
+        lineNumbersButton.action = #selector(changePreferences(_:))
         let folderButton = NSButton(title: "Open Themes Folder", target: self, action: #selector(openThemesFolder(_:)))
         let reloadButton = NSButton(title: "Reload Themes", target: self, action: #selector(reloadThemes(_:)))
         let themeActions = NSStackView(views: [folderButton, reloadButton])
@@ -65,7 +70,8 @@ final class SettingsWindowController: NSWindowController {
         let preferenceRows = [row("Light appearance", lightPicker), row("Dark appearance", darkPicker),
                               themeActions, themeStatus,
                               row("Font", fontPicker), row("Font size", sizeField, suffix: "pt"),
-                              row("Line height", heightField, suffix: "%"), row("Line wrapping", wrapButton)]
+                              row("Line height", heightField, suffix: "%"), row("Line wrapping", wrapButton),
+                              row("Line numbers", lineNumbersButton)]
 
         let title = NSTextField(labelWithString: "Default editor")
         title.font = .systemFont(ofSize: NSFont.systemFontSize, weight: .semibold)
@@ -99,10 +105,15 @@ final class SettingsWindowController: NSWindowController {
             status.widthAnchor.constraint(equalTo: stack.widthAnchor),
             themeStatus.widthAnchor.constraint(equalTo: stack.widthAnchor),
         ])
+        preferencesObserver = NotificationCenter.default.addObserver(forName: .editorPreferencesChanged, object: nil, queue: .main) { [weak self] _ in
+            MainActor.assumeIsolated { self?.syncDisplayPreferences() }
+        }
         window.center()
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    deinit { if let preferencesObserver { NotificationCenter.default.removeObserver(preferencesObserver) } }
 
     override func showWindow(_ sender: Any?) {
         reloadThemes(nil)
@@ -160,6 +171,12 @@ final class SettingsWindowController: NSWindowController {
         if sender === sizeField { EditorPreferences.fontSize = sizeField.doubleValue }
         if sender === heightField { EditorPreferences.lineHeight = heightField.doubleValue }
         if sender === wrapButton { EditorPreferences.wrapLines = wrapButton.state == .on }
+        if sender === lineNumbersButton { EditorPreferences.showLineNumbers = lineNumbersButton.state == .on }
+    }
+
+    private func syncDisplayPreferences() {
+        wrapButton.state = EditorPreferences.wrapLines ? .on : .off
+        lineNumbersButton.state = EditorPreferences.showLineNumbers ? .on : .off
     }
 
     @objc private func makeDefault(_ sender: NSButton) {

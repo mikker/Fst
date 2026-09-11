@@ -3,4 +3,4 @@
 [extension.run]
 command = ["just", "run"]
 auto_start = false
-signal = "STATUS:READY"
+signal = "SIGNAL:READY"

@@ -27,9 +27,9 @@ test:
 # Build and test before considering a change ready.
 check: build test
 
-# Rebuild, quit the previous local app normally, and launch.
+# Rebuild, quit the previous local app normally, and run it in the foreground.
 run: build kill
-  open '{{app}}'
+  '{{app}}/Contents/MacOS/Fst'
 
 # Open the existing Debug build, optionally with files (no rebuild).
 [positional-arguments]

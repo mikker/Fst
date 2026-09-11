@@ -145,7 +145,7 @@ func testDocumentsAndEditing() throws {
     try preferenceDocument.read(from: Data("let value = 1\n".utf8), ofType: "Text Document")
     preferenceDocument.makeWindowControllers()
     let preferenceEditor = preferenceDocument.windowControllers[0].contentViewController as! EditorViewController
-    let preferenceKeys = ["fontName", "fontSize", "lineHeight", "lightTheme", "darkTheme", "wrapLines"]
+    let preferenceKeys = ["fontName", "fontSize", "lineHeight", "lightTheme", "darkTheme", "wrapLines", "showLineNumbers"]
     let oldPreferences = preferenceKeys.map { UserDefaults.standard.object(forKey: $0) }
     defer {
         for (key, value) in zip(preferenceKeys, oldPreferences) {
@@ -186,6 +186,10 @@ func testDocumentsAndEditing() throws {
     expect(wideHeight > 0 && narrowHeight > wideHeight, "Long lines wrap and reflow when the window narrows")
     expect(wrappingEditor.lineIndex.count == 2, "Soft wraps must preserve logical line numbers")
     expect(!wrappingText.enclosingScrollView!.hasHorizontalScroller, "Wrapped text doesn't need horizontal scrolling")
+    EditorPreferences.showLineNumbers = false
+    expect(!wrappingText.enclosingScrollView!.rulersVisible, "Line numbers can be hidden")
+    EditorPreferences.showLineNumbers = true
+    expect(wrappingText.enclosingScrollView!.rulersVisible, "Line numbers can be shown")
     EditorPreferences.wrapLines = false
     expect(wrappedLineHeight(width: 400) == 0, "Disabling wrapping restores a single visual line")
     expect(wrappingText.enclosingScrollView!.hasHorizontalScroller, "Unwrapped text supports horizontal scrolling")

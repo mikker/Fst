@@ -2,7 +2,7 @@ import AppKit
 import Sparkle
 
 @main
-final class AppDelegate: NSObject, NSApplicationDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     private lazy var updater = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
     private var settingsController: SettingsWindowController?
 
@@ -60,6 +60,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let replace = edit.addItem(withTitle: "Find and Replace…", action: #selector(NSTextView.performFindPanelAction(_:)), keyEquivalent: "f")
         replace.keyEquivalentModifierMask = [.command, .option]
         replace.tag = NSTextFinder.Action.showReplaceInterface.rawValue
+        let view = submenu("View")
+        let wrapLines = view.addItem(withTitle: "Wrap Lines", action: #selector(toggleWrapLines(_:)), keyEquivalent: "")
+        wrapLines.target = self
+        let lineNumbers = view.addItem(withTitle: "Show Line Numbers", action: #selector(toggleLineNumbers(_:)), keyEquivalent: "")
+        lineNumbers.target = self
         let window = submenu("Window")
         item(window, "Minimize", #selector(NSWindow.performMiniaturize(_:)), "m")
         item(window, "Zoom", #selector(NSWindow.performZoom(_:)))
@@ -68,6 +73,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        FileHandle.standardOutput.write(Data("SIGNAL:READY\n".utf8))
         // Keep updater initialization off the first-window display path.
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in _ = self?.updater }
     }
@@ -80,5 +86,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if settingsController == nil { settingsController = SettingsWindowController() }
         settingsController?.showWindow(sender)
         settingsController?.window?.makeKeyAndOrderFront(sender)
+    }
+
+    @objc private func toggleWrapLines(_ sender: Any?) {
+        EditorPreferences.wrapLines.toggle()
+    }
+
+    @objc private func toggleLineNumbers(_ sender: Any?) {
+        EditorPreferences.showLineNumbers.toggle()
+    }
+
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        if menuItem.action == #selector(toggleWrapLines(_:)) {
+            menuItem.state = EditorPreferences.wrapLines ? .on : .off
+        } else if menuItem.action == #selector(toggleLineNumbers(_:)) {
+            menuItem.state = EditorPreferences.showLineNumbers ? .on : .off
+        }
+        return true
     }
 }

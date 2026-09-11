@@ -9,6 +9,10 @@ struct EditorPreferences {
         get { UserDefaults.standard.bool(forKey: "wrapLines") }
         set { set(newValue, for: "wrapLines") }
     }
+    static var showLineNumbers: Bool {
+        get { UserDefaults.standard.object(forKey: "showLineNumbers") as? Bool ?? true }
+        set { set(newValue, for: "showLineNumbers") }
+    }
     static var fontName: String {
         get { UserDefaults.standard.string(forKey: "fontName") ?? "System Mono" }
         set { set(newValue, for: "fontName") }

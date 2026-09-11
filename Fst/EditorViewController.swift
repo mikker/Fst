@@ -197,6 +197,7 @@ final class EditorViewController: NSViewController, NSTextViewDelegate {
 
     private func applyPreferences() {
         applyWrapping()
+        textView.enclosingScrollView?.rulersVisible = EditorPreferences.showLineNumbers
         applyTypography()
         applyTheme()
         ruler.refresh()
