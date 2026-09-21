@@ -56,6 +56,14 @@ func testDocumentsAndEditing() throws {
     try document.read(from: bom, ofType: "Text Document")
     let savedBOM = try document.data(ofType: "Text Document")
     expect(savedBOM == bom, "UTF-8 BOM preservation")
+    expect(!TextDocument.autosavesInPlace && !TextDocument.autosavesDrafts,
+           "Documents must require an explicit save")
+    let savePanel = NSSavePanel()
+    savePanel.allowedContentTypes = [UTType(filenameExtension: "md")!]
+    expect(document.prepareSavePanel(savePanel), "Save panel preparation")
+    expect(savePanel.allowedContentTypes.isEmpty, "Save panel must accept any file extension")
+    expect(document.fileNameExtension(forType: "Text Document", saveOperation: .saveAsOperation) == nil,
+           "Saving must not append a default extension")
     do {
         try TextDocument().read(from: Data([0, 1, 2, 255]), ofType: "Text Document")
         fatalError("Binary input accepted")

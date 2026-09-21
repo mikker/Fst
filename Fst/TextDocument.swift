@@ -7,8 +7,20 @@ final class TextDocument: NSDocument {
     private var byteOrderMark = Data()
     private var editor: EditorViewController?
 
-    override class var autosavesInPlace: Bool { true }
+    override class var autosavesInPlace: Bool { false }
+    override class var autosavesDrafts: Bool { false }
     override class func canConcurrentlyReadDocuments(ofType typeName: String) -> Bool { true }
+
+    override func prepareSavePanel(_ savePanel: NSSavePanel) -> Bool {
+        guard super.prepareSavePanel(savePanel) else { return false }
+        savePanel.allowedContentTypes = []
+        savePanel.isExtensionHidden = false
+        return true
+    }
+
+    override func fileNameExtension(forType typeName: String, saveOperation: NSDocument.SaveOperationType) -> String? {
+        nil
+    }
 
     override func read(from data: Data, ofType typeName: String) throws {
         if data.starts(with: [0xEF, 0xBB, 0xBF]) {
