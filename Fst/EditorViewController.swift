@@ -237,6 +237,11 @@ final class EditorViewController: NSViewController, NSTextViewDelegate {
         let theme = EditorTheme.current(for: textView.effectiveAppearance)
         textView.backgroundColor = theme.background
         textView.textColor = theme.foreground
+        textView.typingAttributes[.foregroundColor] = theme.foreground
+        if let storage = textView.textStorage, storage.length > 0 {
+            storage.addAttribute(.foregroundColor, value: theme.foreground,
+                                 range: NSRange(location: 0, length: storage.length))
+        }
         textView.insertionPointColor = theme.caret ?? theme.foreground
         textView.selectedTextAttributes = [.backgroundColor: theme.selection ?? NSColor.selectedTextBackgroundColor]
         highlighter?.theme = theme

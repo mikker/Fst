@@ -138,6 +138,14 @@ func testDocumentsAndEditing() throws {
     text.insertText("plain text", replacementRange: text.selectedRange())
     expect(text.textStorage!.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? NSColor == darkForeground,
            "Plain text typed in dark mode must use the dark foreground")
+    text.textStorage!.addAttribute(.foregroundColor, value: NSColor.black,
+                                   range: NSRange(location: 6, length: 4))
+    text.appearance = NSAppearance(named: .aqua)
+    text.appearance = NSAppearance(named: .darkAqua)
+    for offset in 0..<text.textStorage!.length {
+        expect(text.textStorage!.attribute(.foregroundColor, at: offset, effectiveRange: nil) as? NSColor == darkForeground,
+               "Theme changes must repair the base color of all unstyled text")
+    }
     text.appearance = nil
     print("PASS: UTF-16 byte order, incremental highlighting, plain text reset")
 
