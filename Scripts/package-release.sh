@@ -1,8 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
-version="${1:?Usage: Scripts/package-release.sh 1.2.3}"
-[[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo 'Expected version X.Y.Z' >&2; exit 1; }
+version="${1:?Usage: Scripts/package-release.sh 0.2}"
+[[ "$version" =~ ^[0-9]+\.[0-9]+(\.[0-9]+)?$ ]] || { echo 'Expected version X.Y' >&2; exit 1; }
 # Sparkle compares numeric versions; use the release version as the build version too.
 mkdir -p dist
 Scripts/agent-build.sh archive -project Fst.xcodeproj -scheme Fst -configuration Release \

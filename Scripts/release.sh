@@ -1,9 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
-version="${1:?Usage: Scripts/release.sh 1.2.3}"
+version="${1:?Usage: Scripts/release.sh 0.2}"
 version="${version#v}"
-[[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo 'Expected version X.Y.Z' >&2; exit 1; }
+[[ "$version" =~ ^[0-9]+\.[0-9]+(\.[0-9]+)?$ ]] || { echo 'Expected version X.Y' >&2; exit 1; }
 tag="v$version"
 repo=mikker/Fst
 mkdir -p dist

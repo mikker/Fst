@@ -10,8 +10,8 @@ import sys
 import xml.etree.ElementTree as ET
 
 version = sys.argv[1]
-if not re.fullmatch(r"\d+\.\d+\.\d+", version):
-    raise SystemExit("Expected version X.Y.Z")
+if not re.fullmatch(r"\d+\.\d+(\.\d+)?", version):
+    raise SystemExit("Expected version X.Y")
 archive = Path("dist/Fst.app.zip")
 info = plistlib.loads(Path("build/export/Fst.app/Contents/Info.plist").read_bytes())
 assert info["CFBundleShortVersionString"] == version
