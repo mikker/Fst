@@ -74,7 +74,7 @@ just clean           # Clean build products, retain logs
 just --list          # Show all commands
 ```
 
-Like Spellbook and Snailblaze, `Scripts/agent-build.sh` puts derived data in `build/dd` and timestamped logs in `build/xcodebuild`. Local builds disable code signing, so no development certificate is required. `just kill` requests a normal quit of the local Debug app; it never force-kills an editor with unsaved work. A cancelled quit also stops `just run`.
+`Scripts/agent-build.sh` puts derived data in `build/dd` and timestamped logs in `build/xcodebuild`. Local builds disable code signing, so no development certificate is required. `just kill` requests a normal quit of the local Debug app; it never force-kills an editor with unsaved work. A cancelled quit also stops `just run`.
 
 The test harness runs directly through `Scripts/test.sh` because this project has no Xcode test target. The benchmark can also be run directly with `python3 Scripts/benchmark-launch.py [path-to-binary]`; its default is this repository's Release build.
 
