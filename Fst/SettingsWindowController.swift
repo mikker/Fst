@@ -1,6 +1,6 @@
 import AppKit
 
-final class SettingsWindowController: NSWindowController {
+final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
     private let lightPicker = NSPopUpButton()
     private let darkPicker = NSPopUpButton()
     private let fontPicker = NSPopUpButton()
@@ -21,6 +21,7 @@ final class SettingsWindowController: NSWindowController {
         window.isReleasedWhenClosed = false
         window.tabbingMode = .disallowed
         super.init(window: window)
+        window.delegate = self
 
         func row(_ label: String, _ control: NSView, suffix: String = "") -> NSStackView {
             let text = NSTextField(labelWithString: label)
@@ -54,6 +55,8 @@ final class SettingsWindowController: NSWindowController {
             field.widthAnchor.constraint(equalToConstant: 60).isActive = true
             field.target = self
             field.action = #selector(changePreferences(_:))
+            field.delegate = self
+            (field.cell as? NSTextFieldCell)?.sendsActionOnEndEditing = true
         }
         wrapButton.state = EditorPreferences.wrapLines ? .on : .off
         wrapButton.target = self
@@ -120,6 +123,17 @@ final class SettingsWindowController: NSWindowController {
         super.showWindow(sender)
     }
 
+    func windowWillClose(_ notification: Notification) { window?.makeFirstResponder(nil) }
+
+    func controlTextDidChange(_ notification: Notification) {
+        guard let field = notification.object as? NSTextField, let format = field.formatter as? NumberFormatter,
+              let value = format.number(from: field.currentEditor()?.string ?? "")?.doubleValue,
+              let minimum = format.minimum?.doubleValue, let maximum = format.maximum?.doubleValue,
+              (minimum...maximum).contains(value) else { return }
+        if field === sizeField { EditorPreferences.fontSize = value }
+        if field === heightField { EditorPreferences.lineHeight = value }
+    }
+
     @objc private func openThemesFolder(_ sender: Any?) {
         do {
             _ = try CustomThemes.files()
@@ -177,6 +191,9 @@ final class SettingsWindowController: NSWindowController {
     private func syncDisplayPreferences() {
         wrapButton.state = EditorPreferences.wrapLines ? .on : .off
         lineNumbersButton.state = EditorPreferences.showLineNumbers ? .on : .off
+        // Reflect View menu font-size changes, but never overwrite a field the user is typing in.
+        if sizeField.currentEditor() == nil { sizeField.doubleValue = EditorPreferences.fontSize }
+        if heightField.currentEditor() == nil { heightField.doubleValue = EditorPreferences.lineHeight }
     }
 
     @objc private func makeDefault(_ sender: NSButton) {

@@ -12,10 +12,15 @@ struct DefaultEditor {
     static let extensions = Set(Language.hashExtensions + Language.slashExtensions + Language.sqlExtensions + Language.dataExtensions)
 
     static var contentTypes: [UTType] {
-        // Constrain lookup to text: .ts also identifies an MPEG transport stream.
-        let types = extensions.sorted().compactMap {
+        // Constrain lookup to text so ambiguous extensions (.exs is also a Logic
+        // instrument) never take over non-text types.
+        var types = extensions.sorted().compactMap {
             UTType(filenameExtension: $0, conformingTo: .text)
         }
+        // Exception: Launch Services identifies every .ts file as the system's MPEG
+        // transport stream, never as TypeScript, so claim that type too or .ts stays
+        // with the video player. Info.plist must list it for registration to work.
+        if extensions.contains("ts") { types.append(.mpeg2TransportStream) }
         return Array(Set(types)).sorted { $0.identifier < $1.identifier }
     }
 

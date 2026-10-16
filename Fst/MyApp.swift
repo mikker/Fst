@@ -65,6 +65,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         wrapLines.target = self
         let lineNumbers = view.addItem(withTitle: "Show Line Numbers", action: #selector(toggleLineNumbers(_:)), keyEquivalent: "")
         lineNumbers.target = self
+        view.addItem(.separator())
+        for (title, key, step) in [("Increase Font Size", "+", 1), ("Increase Font Size", "=", 1), ("Decrease Font Size", "-", -1), ("Actual Size", "0", 0)] {
+            let size = view.addItem(withTitle: title, action: #selector(adjustFontSize(_:)), keyEquivalent: key)
+            size.target = self
+            size.tag = step
+            size.isHidden = key == "="
+            size.allowsKeyEquivalentWhenHidden = true
+        }
         let window = submenu("Window")
         item(window, "Minimize", #selector(NSWindow.performMiniaturize(_:)), "m")
         item(window, "Zoom", #selector(NSWindow.performZoom(_:)))
@@ -94,6 +102,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
 
     @objc private func toggleLineNumbers(_ sender: Any?) {
         EditorPreferences.showLineNumbers.toggle()
+    }
+
+    @objc private func adjustFontSize(_ sender: NSMenuItem) {
+        EditorPreferences.fontSize = sender.tag == 0 ? 14 : EditorPreferences.fontSize + Double(sender.tag)
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
