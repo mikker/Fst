@@ -92,5 +92,5 @@ quicklook-preview file="build/fixtures/small.swift": fixtures quicklook-register
   qlmanage -p {{quote(file)}}
 
 # Build, sign, and notarize locally, then publish to GitHub and update Homebrew.
-release version:
+release version="":
   Scripts/release.sh {{quote(version)}}

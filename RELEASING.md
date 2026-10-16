@@ -1,13 +1,11 @@
 # Releases
 
-Run `just release 0.2` from a clean, up-to-date `main` checkout. Like Moves, releases run on your Mac using your existing Keychain credentials. The command tests, builds a universal app, signs with Developer ID, notarizes and staples it, signs the ZIP with Sparkle, creates a version tag, publishes the GitHub release and appcast, and updates `mikker/homebrew-tap`.
+Versions are `X.Y`, bumped by 0.1 each release. User-visible changes go in `CHANGELOG.md` under `## Unreleased` as they land, written for users; the `fst-release` skill in `.agents/skills` reviews the delta, the docs and those notes before a release.
+
+Run `just release` from a clean `main` that matches `origin/main` (or `just release 1.0` to pick the version). Like Moves and Dinky, releases run on your Mac using your existing Keychain credentials. The command runs the tests, renames `## Unreleased` to `## 0.3`, commits and pushes `Release 0.3`, builds a universal app, signs it with Developer ID, notarizes and staples it, signs the ZIP with Sparkle, writes `dist/appcast.xml` with the `## 0.3` section of the changelog, rendered by GitHub, as the notes the update window shows, writes the cask, tags `v0.3`, creates a draft GitHub release whose notes are that same section, uploads the ZIP, the appcast and the cask, publishes it as latest, and updates `mikker/homebrew-tap` through a temporary clone. Running it again without adding commits reuses the `Release 0.3` commit and retries a failed release or tap update; a published archive is never replaced. Do not move published tags.
 
 You need Xcode 26+, Python 3.11+, `gh`, GitHub SSH access, your Developer ID Application identity, the `TunaNotary` notarization profile, and Fst’s Sparkle key (Keychain account `com.mikker.Fst`). These are already configured on this Mac. Override `NOTARYTOOL_PROFILE` to use another profile. No GitHub Actions secrets are required. CI only builds and tests pull requests and main.
 
-Release versions are `X.Y` (one decimal, always +0.1 per release) and must increase; older `X.Y.Z` tags remain valid. Release notes are the commit subjects since the previous release; the same Markdown becomes the GitHub release body and, rendered through GitHub's Markdown API, the embedded Sparkle notes. The supplied version sets both app version fields. Packaging completes before the tag is pushed. ZIP and appcast assets are uploaded to a draft and published together; published archives are never replaced. Run the same command again to retry a failed release or finish a failed tap update. Do not move published tags.
+`Scripts/package-release.sh 0.3` builds and notarizes without publishing; it needs a `## 0.3` section in `CHANGELOG.md` for the appcast. Output is in ignored `dist/`.
 
-The tap update uses a temporary checkout and your normal SSH credentials, leaving your existing tap checkout untouched. Keep a secure backup of the Sparkle key and renew the Developer ID certificate before expiry.
-
-`Scripts/package-release.sh 0.2` builds and notarizes without publishing. Output is in ignored `dist/`.
-
-Sparkle’s feed is the `appcast.xml` asset of the latest GitHub release; no Pages deployment or separate appcast repository is needed.
+Sparkle’s feed is the `appcast.xml` asset of the latest GitHub release; no Pages deployment or separate appcast repository is needed. Keep a secure backup of the Sparkle key and renew the Developer ID certificate before expiry.
