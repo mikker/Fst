@@ -27,7 +27,10 @@ item = ET.SubElement(channel, "item")
 ET.SubElement(item, "title").text = version
 ET.SubElement(item, "pubDate").text = email.utils.format_datetime(datetime.datetime.now(datetime.timezone.utc))
 ET.SubElement(item, f"{{{ns}}}minimumSystemVersion").text = info["LSMinimumSystemVersion"]
-ET.SubElement(item, f"{{{ns}}}releaseNotesLink").text = f"https://github.com/mikker/Fst/releases/tag/v{version}"
+# Embed the notes; a releaseNotesLink to the GitHub release page renders the whole site in Sparkle.
+notes = Path("dist/notes.html")
+if notes.exists():
+    ET.SubElement(item, "description").text = notes.read_text()
 ET.SubElement(item, "enclosure", {
     "url": url, "length": str(archive.stat().st_size), "type": "application/octet-stream",
     f"{{{ns}}}version": info["CFBundleVersion"], f"{{{ns}}}shortVersionString": version,

@@ -45,6 +45,7 @@ if sys.argv[2] and version(sys.argv[1]) <= version(sys.argv[2]):
     raise SystemExit('Release version must be greater than the current latest release')
 PY
 Scripts/test.sh
+Scripts/release-notes.sh "$tag" "$latest"
 Scripts/package-release.sh "$version"
 [[ "$head" == "$(git rev-parse HEAD)" && -z "$(git status --porcelain)" ]] || { echo 'Source changed during packaging; retry the release' >&2; exit 1; }
 if ! git rev-parse --verify "$tag" >/dev/null 2>&1; then
@@ -52,7 +53,7 @@ if ! git rev-parse --verify "$tag" >/dev/null 2>&1; then
 fi
 git push origin "$tag"
 if ! gh release view "$tag" -R "$repo" >/dev/null 2>&1; then
-  gh release create "$tag" -R "$repo" --verify-tag --draft --title "Fst $version" --generate-notes
+  gh release create "$tag" -R "$repo" --verify-tag --draft --title "Fst $version" --notes-file dist/notes.md
 fi
 gh release upload "$tag" -R "$repo" dist/Fst.app.zip dist/appcast.xml dist/fst.rb --clobber
 gh release edit "$tag" -R "$repo" --draft=false --latest
